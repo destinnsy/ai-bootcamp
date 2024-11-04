@@ -42,6 +42,7 @@
 | ----------------- | ----------------------------------------- | ----------- |
 | OPENAI_API_KEY    | OpenAI Key                                | none        |
 | OPENAI_MODEL_NAME | Name of the OpenAI model you wish to use. | gpt-4o-mini |
+| PINECONE_API_KEY  | Pinecone API Key                          | none        |
 
 ## Initial Data Preparations for Web App
 

@@ -1,4 +1,5 @@
-from langchain_chroma import Chroma
+import os
+
 from langchain_openai import OpenAIEmbeddings
 from langchain_openai import ChatOpenAI
 from langchain.chains.history_aware_retriever import create_history_aware_retriever
@@ -6,18 +7,29 @@ from langchain.chains.retrieval import create_retrieval_chain
 from langchain.chains.combine_documents import create_stuff_documents_chain
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 import streamlit as st
+from langchain_pinecone import PineconeVectorStore
+from pinecone import Pinecone
+
 from .data import good_to_have, should_have, must_have
 
 
 embeddings_model = OpenAIEmbeddings(model='text-embedding-3-large')
-vectordb = Chroma(
-    embedding_function=embeddings_model,
-    collection_name="IM8",
-    persist_directory='./vector_db'
-)
+# vectordb = Chroma(
+#     embedding_function=embeddings_model,
+#     collection_name="IM8",
+#     persist_directory='./vector_db'
+# )
+
+
+pc = Pinecone(api_key=os.environ.get("PINECONE_API_KEY"))
+index_name = "im8-index"
+
+index = pc.Index(index_name)
+vector_store = PineconeVectorStore(index=index, embedding=embeddings_model)
 
 def prompt_chatbot(input: str, chat_history):
-    retriever = vectordb.as_retriever()
+    # retriever = vectordb.as_retriever()
+    retriever = vector_store.as_retriever()
     llm = ChatOpenAI(model=st.secrets["OPENAI_MODEL_NAME"], temperature=0)
 
     ### Contextualize question ###

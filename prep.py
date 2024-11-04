@@ -1,17 +1,13 @@
+from datetime import time
+
 from langchain_community.document_loaders import JSONLoader
 import json
 from pathlib import Path
-from pprint import pprint
-import tiktoken
-from langchain_chroma import Chroma
-from langchain_openai import ChatOpenAI
+from pinecone import Pinecone, ServerlessSpec
+from langchain_pinecone import PineconeVectorStore
 from langchain_openai import OpenAIEmbeddings
 from dotenv import load_dotenv
 import os
-from typing import List
-from langchain.chains.retrieval import create_retrieval_chain
-from langchain.chains.combine_documents import create_stuff_documents_chain
-from langchain_core.prompts import ChatPromptTemplate
 from openai import OpenAI
 
 load_dotenv('.streamlit/secrets.toml')
@@ -72,9 +68,29 @@ document_list = JSONLoader(
 
 embeddings_model = OpenAIEmbeddings(model='text-embedding-3-large')
 
-vectordb = Chroma.from_documents(
-    documents=document_list,
-    embedding=embeddings_model,
-    collection_name="IM8",
-    persist_directory='./vector_db'
-)
+#
+# vectordb = Chroma.from_documents(
+#     documents=document_list,
+#     embedding=embeddings_model,
+#     collection_name="IM8",
+#     persist_directory='./vector_db'
+# )
+
+pc = Pinecone(api_key=os.environ.get("PINECONE_API_KEY"))
+index_name = "im8-index"
+
+existing_indexes = [index_info["name"] for index_info in pc.list_indexes()]
+if index_name not in existing_indexes:
+    pc.create_index(
+        name=index_name,
+        dimension=3072,
+        metric="cosine",
+        spec=ServerlessSpec(cloud="aws", region="us-east-1"),
+    )
+    while not pc.describe_index(index_name).status["ready"]:
+        time.sleep(1)
+
+index = pc.Index(index_name)
+vector_store = PineconeVectorStore(index=index, embedding=embeddings_model)
+
+vector_store.add_documents(documents=document_list)

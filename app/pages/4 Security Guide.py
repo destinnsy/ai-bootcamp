@@ -1,4 +1,3 @@
-from openai import OpenAI
 import streamlit as st
 from helper.crewai_bot import crewai_prompt
 from langchain_core.messages import HumanMessage, SystemMessage

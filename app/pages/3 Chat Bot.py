@@ -1,4 +1,3 @@
-from openai import OpenAI
 import streamlit as st
 from helper.rag import prompt_chatbot
 from langchain_core.messages import HumanMessage, SystemMessage
