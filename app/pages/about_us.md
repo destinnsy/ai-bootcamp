@@ -1,6 +1,8 @@
 This is a POC for the project phase of AI Champions Bootcamp under _Project Type A - Ideas from WOG Ideathon_
 
-IMPORTANT NOTICE: This web application is developed as a POC and for learning purposes.
+IMPORTANT NOTICE: This web application is developed as a POC for learning purposes.
+
+For a functional AI engine for IM8 please refer to: https://launchpad.gov.sg/hub/applications/07383dc3-9dcd-492f-b46a-200640a3219e
 
 The information provided here is NOT intended for actual usage and should not be relied upon for making any decisions, especially those related to financial, legal, or healthcare matters.
 

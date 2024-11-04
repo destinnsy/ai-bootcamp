@@ -11,7 +11,7 @@ if not check_password():
 st.title("Chat Bot")
 
 st.write("This is a POC to build a RAG that can answer what are the security policies related to a piece of technology.")
-st.write("Sample input: \"What are the security policies related to SQS?\".")
+st.write("Sample input: \"What are the security policies related to Kubernetes?\".")
 
 
 if "chat_bot_messages" not in st.session_state:
