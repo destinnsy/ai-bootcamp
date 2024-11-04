@@ -4,6 +4,11 @@ import sys
 sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
 
 import streamlit as st
+from helper.utility import check_password
+
+# Do not continue if check_password is not True.  
+if not check_password():  
+    st.stop()
 
 st.title("AI Bootcamp Project Type A POC")
 

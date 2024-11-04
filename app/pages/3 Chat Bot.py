@@ -1,6 +1,11 @@
 import streamlit as st
 from helper.rag import prompt_chatbot
 from langchain_core.messages import HumanMessage, SystemMessage
+from helper.utility import check_password
+
+# Do not continue if check_password is not True.  
+if not check_password():  
+    st.stop()
 
 
 st.title("Chat Bot")

@@ -1,6 +1,11 @@
 import streamlit as st
 from helper.crewai_bot import crewai_prompt
 from langchain_core.messages import HumanMessage, SystemMessage
+from helper.utility import check_password
+
+# Do not continue if check_password is not True.  
+if not check_password():  
+    st.stop()
 
 
 st.title("Security Guide")
