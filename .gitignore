@@ -1,0 +1,14 @@
+.idea/
+.env
+venv/
+.streamlit/
+data/
+
+catalogs/
+profiles/
+
+*/**/__pycache__
+__pycache__/
+
+vector_db/
+db/
